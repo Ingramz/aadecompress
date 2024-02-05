@@ -2,7 +2,8 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 
 public class AADecompress {
-    private delegate bool DecompressDelegate(string[] sources, int nSources, [MarshalAs(UnmanagedType.LPStr)] string destination);
+    [return: MarshalAs(UnmanagedType.I1)]
+    private delegate bool DecompressDelegate([MarshalAs(UnmanagedType.LPArray, ArraySubType = UnmanagedType.LPStr)] string[] sources, [MarshalAs(UnmanagedType.I4)] int nSources, [MarshalAs(UnmanagedType.LPStr)] string destination);
 
     private const int START_OFFSET = 0x00377B18;
     private const int DECOMPRESS_OFFSET = 0x00044080;
@@ -28,8 +29,6 @@ public class AADecompress {
 
         DecompressDelegate _decompress = Marshal.GetDelegateForFunctionPointer<DecompressDelegate>(startAddress - (START_OFFSET - DECOMPRESS_OFFSET));
 
-        _decompress(sources, sources.Length, destination);
-
-        return true;
+        return _decompress(sources, sources.Length, destination);
     }
 }
