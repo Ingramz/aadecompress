@@ -32,6 +32,10 @@ Output:
 Decompression complete. (632793to632793_pak_c00_de)
 ```
 
+### Limitations
+
+Providing incomplete amount of source files or invalid files may crash the application with a `0xC0000005` error.
+
 ## Building the project
 
 Install [.NET SDK](https://dotnet.microsoft.com/en-us/download).
